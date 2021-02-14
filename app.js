@@ -13,14 +13,14 @@ let sliders = [];
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images
-const showImages = images => {
+const showImages = (images) => {
     imagesArea.style.display = 'block';
     gallery.innerHTML = '';
     // show gallery title
     toggleSpinner();
     galleryHeader.style.display = 'flex';
 
-    images.forEach(image => {
+    images.forEach((image) => {
         let div = document.createElement('div');
         div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
         div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
@@ -28,12 +28,12 @@ const showImages = images => {
     });
 };
 
-const getImages = query => {
+const getImages = (query) => {
     setTimeout(() => {
         fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
-            .then(response => response.json())
-            .then(data => showImages(data.hits))
-            .catch(err => console.log(err));
+            .then((response) => response.json())
+            .then((data) => showImages(data.hits))
+            .catch((err) => console.log(err));
     }, 3000);
 };
 
@@ -46,8 +46,10 @@ const selectItem = (event, img) => {
     if (item === -1) {
         sliders.push(img);
     } else {
+        let deselect = sliders.indexOf(img);
         //alert('Hey, Already added !');
-        sliders.pop(img);
+        //sliders.pop(img);
+        sliders.splice(deselect, 1);
     }
 };
 var timer;
@@ -71,7 +73,7 @@ const createSlider = () => {
     // hide image aria
     imagesArea.style.display = 'none';
     const duration = document.getElementById('duration').value || 1000;
-    sliders.forEach(slide => {
+    sliders.forEach((slide) => {
         let item = document.createElement('div');
         item.className = 'slider-item';
         item.innerHTML = `<img class="w-100"
@@ -87,12 +89,12 @@ const createSlider = () => {
 };
 
 // change slider index
-const changeItem = index => {
+const changeItem = (index) => {
     changeSlide((slideIndex += index));
 };
 
 // change slide item
-const changeSlide = index => {
+const changeSlide = (index) => {
     const items = document.querySelectorAll('.slider-item');
     if (index < 0) {
         slideIndex = items.length - 1;
@@ -104,7 +106,7 @@ const changeSlide = index => {
         slideIndex = 0;
     }
 
-    items.forEach(item => {
+    items.forEach((item) => {
         item.style.display = 'none';
     });
 
